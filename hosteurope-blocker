@@ -1,0 +1,42 @@
+#/bin/bash
+
+# Create the HOSTEUROPE iptables chain if it doesn't exist
+iptables -n --list HOSTEUROPE >/dev/null 2>&1 \
+    || (iptables -N HOSTEUROPE && iptables -I INPUT 1 -j HOSTEUROPE)
+
+# Flush the existing HOSTEUROPE iptables chain
+iptables -F HOSTEUROPE
+
+# Get list of IP ranges
+#
+# We use curl to fetch the list of AS from a site that has hosteuropes BGP info.
+# then we fetch all the members, and extract the ranges
+#
+export CURL=curl
+export CURL_OPTS=-A'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36'
+touch /tmp/hosteurope_all_as.txt
+rm /tmp/hosteurope_all_as.txt;
+touch /tmp/hosteurope_all_as.txt
+
+curl -A 'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36' http://bgp.he.net/irr/as-set/AS20773:AS-HOSTEUROPE > /tmp/hosteurope_as_tmp.txt 
+grep "members: " /tmp/hosteurope_as_tmp.txt | sed 's/^.*title="\(.*\)">.*$/\1/g' >  /tmp/hosteurope_as.txt
+
+
+for AS in `cat /tmp/hosteurope_as.txt`; do
+        echo "fetching AS info of $AS"
+        curl -A 'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36' http://bgp.he.net/$AS > /tmp/hosteurope_as_${AS}_tmp.txt
+        grep "\/net\/" /tmp/hosteurope_as_${AS}_tmp.txt | sed "s/^.*\"\/net\/\(.*\)\">.*$/\1/g" > /tmp/hosteurope_as_${AS}.txt
+        cat /tmp/hosteurope_as_${AS}.txt >> /tmp/hosteurope_all_as.txt
+        rm /tmp/hosteurope_as_${AS}_tmp.txt
+        rm /tmp/hosteurope_as_${AS}.txt
+done
+
+rm /tmp/hosteurope_as_tmp.txt /tmp/hosteurope_as.txt
+
+RANGES=$(cat /tmp/hosteurope_all_as.txt)
+
+# Loop through the ranges, adding each to iptables
+for line in $RANGES; do
+    echo $line
+    iptables -A HOSTEUROPE -s "$line" -j REJECT
+done 
