@@ -1,0 +1,42 @@
+#/bin/bash
+
+# Create the HETZNER iptables chain if it doesn't exist
+iptables -n --list HETZNER >/dev/null 2>&1 \
+    || (iptables -N HETZNER && iptables -I INPUT 1 -j HETZNER)
+
+# Flush the existing HETZNER iptables chain
+iptables -F HETZNER
+
+# Get list of IP ranges
+#
+# We use curl to fetch the list of AS from a site that has hetzners BGP info.
+# then we fetch all the members, and extract the ranges
+#
+export CURL=curl
+export CURL_OPTS=-A'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36'
+touch /tmp/hetzner_all_as.txt
+rm /tmp/hetzner_all_as.txt;
+touch /tmp/hetzner_all_as.txt
+
+curl -A 'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36' http://bgp.he.net/irr/as-set/AS-HETZNER > /tmp/hetzner_as_tmp.txt 
+grep "members: " /tmp/hetzner_as_tmp.txt | sed 's/^.*title="\(.*\)">.*$/\1/g' >  /tmp/hetzner_as.txt
+
+
+for AS in `cat /tmp/hetzner_as.txt`; do
+        echo "fetching AS info of $AS"
+        curl -A 'Mozilla/5.0 AppleWebKit/537.36 Chrome/43.0.2357.52 Safari/537.36' http://bgp.he.net/$AS > /tmp/hetzner_as_${AS}_tmp.txt
+        grep "\/net\/" /tmp/hetzner_as_${AS}_tmp.txt | sed "s/^.*\"\/net\/\(.*\)\">.*$/\1/g" > /tmp/hetzner_as_${AS}.txt
+        cat /tmp/hetzner_as_${AS}.txt >> /tmp/hetzner_all_as.txt
+        rm /tmp/hetzner_as_${AS}_tmp.txt
+        rm /tmp/hetzner_as_${AS}.txt
+done
+
+rm /tmp/hetzner_as_tmp.txt /tmp/hetzner_as.txt
+
+RANGES=$(cat /tmp/hetzner_all_as.txt)
+
+# Loop through the ranges, adding each to iptables
+for line in $RANGES; do
+    echo $line
+    iptables -A HETZNER -s "$line" -j REJECT
+done 
