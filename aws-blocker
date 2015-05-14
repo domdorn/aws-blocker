@@ -1,11 +1,13 @@
 #/bin/bash
 
 # Create the AWS iptables chain if it doesn't exist
-iptables -n --list AWS >/dev/null 2>&1 \
-    || (iptables -N AWS && iptables -I INPUT 1 -j AWS)
+#iptables -n --list AWS >/dev/null 2>&1 \
+#    || (iptables -N AWS && iptables -I INPUT 1 -j AWS)
 
-# Flush the existing AWS iptables chain
-iptables -F AWS
+LIST_NAME=blacklist_aws
+
+ipset create --exist ${LIST_NAME} hash:net hashsize 1024
+
 
 # Get list of IP ranges
 #
@@ -18,7 +20,12 @@ iptables -F AWS
 RANGES=$(curl -s -L https://ip-ranges.amazonaws.com/ip-ranges.json \
     | jq -r '.prefixes[].ip_prefix')
 
-# Loop through the ranges, adding each to iptables
+
+ipset flush ${LIST_NAME}
+
+# Loop through the ranges, adding each to the list
 for line in $RANGES; do
-    iptables -A AWS -s "$line" -j REJECT
-done 
+	ipset -A ${LIST_NAME} $line -exist
+done
+
+ 

@@ -1,11 +1,10 @@
 #/bin/bash
 
-# Create the HETZNER iptables chain if it doesn't exist
-iptables -n --list HETZNER >/dev/null 2>&1 \
-    || (iptables -N HETZNER && iptables -I INPUT 1 -j HETZNER)
+LIST_NAME=blacklist_HETZNER
 
-# Flush the existing HETZNER iptables chain
-iptables -F HETZNER
+# Create the named ipset set if it doesn't exist
+ipset create --exist ${LIST_NAME} hash:net hashsize 1024
+
 
 # Get list of IP ranges
 #
@@ -35,8 +34,14 @@ rm /tmp/hetzner_as_tmp.txt /tmp/hetzner_as.txt
 
 RANGES=$(cat /tmp/hetzner_all_as.txt)
 
-# Loop through the ranges, adding each to iptables
+
+
+
+
+ipset flush ${LIST_NAME}
+
+# Loop through the ranges, adding each to the list
 for line in $RANGES; do
-    echo $line
-    iptables -A HETZNER -s "$line" -j REJECT
-done 
+	ipset -A ${LIST_NAME} $line -exist
+done
+
