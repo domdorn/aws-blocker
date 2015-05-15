@@ -1,0 +1,356 @@
+#/bin/bash
+
+#COUNTRIES="$COUNTRIES DE" # Germany
+#COUNTRIES="$COUNTRIES FI" # Finland
+#COUNTRIES="$COUNTRIES FR" # France
+#COUNTRIES="$COUNTRIES CA" # Canada
+#COUNTRIES="$COUNTRIES DK" # Denmark
+#COUNTRIES="$COUNTRIES BE" # Belgium
+#COUNTRIES="$COUNTRIES AT" # Austria
+#COUNTRIES="$COUNTRIES GB" # United Kingdom
+#COUNTRIES="$COUNTRIES US" # United States
+#COUNTRIES="$COUNTRIES UM" # United States Minor Outlying Islands
+#COUNTRIES="$COUNTRIES IE" # Ireland
+#COUNTRIES="$COUNTRIES IT" # Italy
+#COUNTRIES="$COUNTRIES LI" # Liechtenstein
+#COUNTRIES="$COUNTRIES NL" # Netherlands
+#COUNTRIES="$COUNTRIES SI" # Slovenia
+#COUNTRIES="$COUNTRIES SE" # Sweden
+#COUNTRIES="$COUNTRIES CH" # Switzerland
+
+
+
+
+
+#<select name="countryCode[]" class="text" style="width:400px;height:200px;" multiple="">
+COUNTRIES=""
+COUNTRIES="$COUNTRIES A"  # Afghanistan
+COUNTRIES="$COUNTRIES AX" # Aland Islands
+COUNTRIES="$COUNTRIES AL" # Albania
+COUNTRIES="$COUNTRIES DZ" # Algeria
+COUNTRIES="$COUNTRIES AS" # American Samoa
+COUNTRIES="$COUNTRIES AD" # Andorra
+COUNTRIES="$COUNTRIES AO" # Angola
+COUNTRIES="$COUNTRIES AI" # Anguilla
+COUNTRIES="$COUNTRIES AQ" # Antarctica
+COUNTRIES="$COUNTRIES AG" # Antigua and Barbuda
+COUNTRIES="$COUNTRIES AR" # Argentina
+COUNTRIES="$COUNTRIES AM" # Armenia
+COUNTRIES="$COUNTRIES AW" # Aruba
+COUNTRIES="$COUNTRIES AU" # Australia
+COUNTRIES="$COUNTRIES AZ" # Azerbaijan
+COUNTRIES="$COUNTRIES BS" # Bahamas
+COUNTRIES="$COUNTRIES BH" # Bahrain
+COUNTRIES="$COUNTRIES BD" # Bangladesh
+COUNTRIES="$COUNTRIES BB" # Barbados
+COUNTRIES="$COUNTRIES BY" # Belarus
+COUNTRIES="$COUNTRIES BZ" # Belize
+COUNTRIES="$COUNTRIES BJ" # Benin
+COUNTRIES="$COUNTRIES BM" # Bermuda
+COUNTRIES="$COUNTRIES BT" # Bhutan
+COUNTRIES="$COUNTRIES BO" # Bolivia, Plurinational State of
+COUNTRIES="$COUNTRIES BQ" # Bonaire, Sint Eustatius and Saba
+COUNTRIES="$COUNTRIES BA" # Bosnia and Herzegovina
+COUNTRIES="$COUNTRIES BW" # Botswana
+COUNTRIES="$COUNTRIES BV" # Bouvet Island
+COUNTRIES="$COUNTRIES BR" # Brazil
+COUNTRIES="$COUNTRIES IO" # British Indian Ocean Territory
+COUNTRIES="$COUNTRIES BN" # Brunei Darussalam
+COUNTRIES="$COUNTRIES BG" # Bulgaria
+COUNTRIES="$COUNTRIES BF" # Burkina Faso
+COUNTRIES="$COUNTRIES BI" # Burundi
+COUNTRIES="$COUNTRIES KH" # Cambodia
+COUNTRIES="$COUNTRIES CM" # Cameroon
+COUNTRIES="$COUNTRIES CV" # Cape Verde
+COUNTRIES="$COUNTRIES KY" # Cayman Islands
+COUNTRIES="$COUNTRIES CF" # Central African Republic
+COUNTRIES="$COUNTRIES TD" # Chad
+COUNTRIES="$COUNTRIES CL" # Chile
+COUNTRIES="$COUNTRIES CN" # China
+COUNTRIES="$COUNTRIES CO" # Colombia
+COUNTRIES="$COUNTRIES KM" # Comoros
+COUNTRIES="$COUNTRIES CG" # Congo
+COUNTRIES="$COUNTRIES CD" # Congo, The Democratic Republic of The
+COUNTRIES="$COUNTRIES CK" # Cook Islands
+COUNTRIES="$COUNTRIES CR" # Costa Rica
+COUNTRIES="$COUNTRIES CI" # Cote D'ivoire
+COUNTRIES="$COUNTRIES HR" # Croatia
+COUNTRIES="$COUNTRIES CU" # Cuba
+COUNTRIES="$COUNTRIES CW" # Curacao
+COUNTRIES="$COUNTRIES CY" # Cyprus
+COUNTRIES="$COUNTRIES CZ" # Czech Republic
+COUNTRIES="$COUNTRIES DJ" # Djibouti
+COUNTRIES="$COUNTRIES DM" # Dominica
+COUNTRIES="$COUNTRIES DO" # Dominican Republic
+COUNTRIES="$COUNTRIES EC" # Ecuador
+COUNTRIES="$COUNTRIES EG" # Egypt
+COUNTRIES="$COUNTRIES SV" # El Salvador
+COUNTRIES="$COUNTRIES GQ" # Equatorial Guinea
+COUNTRIES="$COUNTRIES ER" # Eritrea
+COUNTRIES="$COUNTRIES EE" # Estonia
+COUNTRIES="$COUNTRIES ET" # Ethiopia
+COUNTRIES="$COUNTRIES FK" # Falkland Islands (Malvinas)
+COUNTRIES="$COUNTRIES FO" # Faroe Islands
+COUNTRIES="$COUNTRIES FJ" # Fiji
+COUNTRIES="$COUNTRIES GF" # French Guiana
+COUNTRIES="$COUNTRIES PF" # French Polynesia
+COUNTRIES="$COUNTRIES TF" # French Southern Territories
+COUNTRIES="$COUNTRIES GA" # Gabon
+COUNTRIES="$COUNTRIES GM" # Gambia
+COUNTRIES="$COUNTRIES GE" # Georgia
+COUNTRIES="$COUNTRIES GH" # Ghana
+COUNTRIES="$COUNTRIES GI" # Gibraltar
+COUNTRIES="$COUNTRIES GR" # Greece
+COUNTRIES="$COUNTRIES GL" # Greenland
+COUNTRIES="$COUNTRIES GD" # Grenada
+COUNTRIES="$COUNTRIES GP" # Guadeloupe
+COUNTRIES="$COUNTRIES GU" # Guam
+COUNTRIES="$COUNTRIES GT" # Guatemala
+COUNTRIES="$COUNTRIES GG" # Guernsey
+COUNTRIES="$COUNTRIES GN" # Guinea
+COUNTRIES="$COUNTRIES GW" # Guinea-Bissau
+COUNTRIES="$COUNTRIES GY" # Guyana
+COUNTRIES="$COUNTRIES HT" # Haiti
+COUNTRIES="$COUNTRIES VA" # Holy See (Vatican City State)
+COUNTRIES="$COUNTRIES HN" # Honduras
+COUNTRIES="$COUNTRIES HK" # Hong Kong
+COUNTRIES="$COUNTRIES HU" # Hungary
+COUNTRIES="$COUNTRIES IS" # Iceland
+COUNTRIES="$COUNTRIES IN" # India
+COUNTRIES="$COUNTRIES ID" # Indonesia
+COUNTRIES="$COUNTRIES IR" # Iran, Islamic Republic of
+COUNTRIES="$COUNTRIES IQ" # Iraq
+COUNTRIES="$COUNTRIES IM" # Isle of Man
+COUNTRIES="$COUNTRIES IL" # Israel
+COUNTRIES="$COUNTRIES JM" # Jamaica
+COUNTRIES="$COUNTRIES JP" # Japan
+COUNTRIES="$COUNTRIES JE" # Jersey
+COUNTRIES="$COUNTRIES JO" # Jordan
+COUNTRIES="$COUNTRIES KZ" # Kazakhstan
+COUNTRIES="$COUNTRIES KE" # Kenya
+COUNTRIES="$COUNTRIES KI" # Kiribati
+COUNTRIES="$COUNTRIES KP" # Korea, Democratic People's Republic of
+COUNTRIES="$COUNTRIES KR" # Korea, Republic of
+COUNTRIES="$COUNTRIES KW" # Kuwait
+COUNTRIES="$COUNTRIES KG" # Kyrgyzstan
+COUNTRIES="$COUNTRIES LA" # Lao People's Democratic Republic
+COUNTRIES="$COUNTRIES LV" # Latvia
+COUNTRIES="$COUNTRIES LB" # Lebanon
+COUNTRIES="$COUNTRIES LS" # Lesotho
+COUNTRIES="$COUNTRIES LR" # Liberia
+COUNTRIES="$COUNTRIES LY" # Libya
+COUNTRIES="$COUNTRIES LT" # Lithuania
+COUNTRIES="$COUNTRIES LU" # Luxembourg
+COUNTRIES="$COUNTRIES MO" # Macao
+COUNTRIES="$COUNTRIES MK" # Macedonia, The Former Yugoslav Republic of
+COUNTRIES="$COUNTRIES MG" # Madagascar
+COUNTRIES="$COUNTRIES MW" # Malawi
+COUNTRIES="$COUNTRIES MY" # Malaysia
+COUNTRIES="$COUNTRIES MV" # Maldives
+COUNTRIES="$COUNTRIES ML" # Mali
+COUNTRIES="$COUNTRIES MT" # Malta
+COUNTRIES="$COUNTRIES MH" # Marshall Islands
+COUNTRIES="$COUNTRIES MQ" # Martinique
+COUNTRIES="$COUNTRIES MR" # Mauritania
+COUNTRIES="$COUNTRIES MU" # Mauritius
+COUNTRIES="$COUNTRIES YT" # Mayotte
+COUNTRIES="$COUNTRIES MX" # Mexico
+COUNTRIES="$COUNTRIES FM" # Micronesia, Federated States of
+COUNTRIES="$COUNTRIES MD" # Moldova, Republic of
+COUNTRIES="$COUNTRIES MC" # Monaco
+COUNTRIES="$COUNTRIES MN" # Mongolia
+COUNTRIES="$COUNTRIES ME" # Montenegro
+COUNTRIES="$COUNTRIES MS" # Montserrat
+COUNTRIES="$COUNTRIES MA" # Morocco
+COUNTRIES="$COUNTRIES MZ" # Mozambique
+COUNTRIES="$COUNTRIES MM" # Myanmar
+COUNTRIES="$COUNTRIES NA" # Namibia
+COUNTRIES="$COUNTRIES NR" # Nauru
+COUNTRIES="$COUNTRIES NP" # Nepal
+COUNTRIES="$COUNTRIES NC" # New Caledonia
+COUNTRIES="$COUNTRIES NZ" # New Zealand
+COUNTRIES="$COUNTRIES NI" # Nicaragua
+COUNTRIES="$COUNTRIES NE" # Niger
+COUNTRIES="$COUNTRIES NG" # Nigeria
+COUNTRIES="$COUNTRIES NU" # Niue
+COUNTRIES="$COUNTRIES NF" # Norfolk Island
+COUNTRIES="$COUNTRIES MP" # Northern Mariana Islands
+COUNTRIES="$COUNTRIES NO" # Norway
+COUNTRIES="$COUNTRIES OM" # Oman
+COUNTRIES="$COUNTRIES PK" # Pakistan
+COUNTRIES="$COUNTRIES PW" # Palau
+COUNTRIES="$COUNTRIES PS" # Palestine, State of
+COUNTRIES="$COUNTRIES PA" # Panama
+COUNTRIES="$COUNTRIES PG" # Papua New Guinea
+COUNTRIES="$COUNTRIES PY" # Paraguay
+COUNTRIES="$COUNTRIES PE" # Peru
+COUNTRIES="$COUNTRIES PH" # Philippines
+COUNTRIES="$COUNTRIES PN" # Pitcairn
+COUNTRIES="$COUNTRIES PL" # Poland
+COUNTRIES="$COUNTRIES PT" # Portugal
+COUNTRIES="$COUNTRIES PR" # Puerto Rico
+COUNTRIES="$COUNTRIES QA" # Qatar
+COUNTRIES="$COUNTRIES RE" # Reunion
+COUNTRIES="$COUNTRIES RO" # Romania
+COUNTRIES="$COUNTRIES RU" # Russian Federation
+COUNTRIES="$COUNTRIES RW" # Rwanda
+COUNTRIES="$COUNTRIES BL" # Saint Barthelemy
+COUNTRIES="$COUNTRIES KN" # Saint Kitts and Nevis
+COUNTRIES="$COUNTRIES LC" # Saint Lucia
+COUNTRIES="$COUNTRIES MF" # Saint Martin (French Part)
+COUNTRIES="$COUNTRIES PM" # Saint Pierre and Miquelon
+COUNTRIES="$COUNTRIES VC" # Saint Vincent and The Grenadines
+COUNTRIES="$COUNTRIES WS" # Samoa
+COUNTRIES="$COUNTRIES SM" # San Marino
+COUNTRIES="$COUNTRIES ST" # Sao Tome and Principe
+COUNTRIES="$COUNTRIES SA" # Saudi Arabia
+COUNTRIES="$COUNTRIES SN" # Senegal
+COUNTRIES="$COUNTRIES RS" # Serbia
+COUNTRIES="$COUNTRIES SC" # Seychelles
+COUNTRIES="$COUNTRIES SL" # Sierra Leone
+COUNTRIES="$COUNTRIES SG" # Singapore
+COUNTRIES="$COUNTRIES SX" # Sint Maarten (Dutch Part)
+COUNTRIES="$COUNTRIES SK" # Slovakia
+COUNTRIES="$COUNTRIES SB" # Solomon Islands
+COUNTRIES="$COUNTRIES SO" # Somalia
+COUNTRIES="$COUNTRIES ZA" # South Africa
+COUNTRIES="$COUNTRIES GS" # South Georgia and The South Sandwich Islands
+COUNTRIES="$COUNTRIES SS" # South Sudan
+COUNTRIES="$COUNTRIES ES" # Spain
+COUNTRIES="$COUNTRIES LK" # Sri Lanka
+COUNTRIES="$COUNTRIES SD" # Sudan
+COUNTRIES="$COUNTRIES SR" # Suriname
+COUNTRIES="$COUNTRIES SJ" # Svalbard and Jan Mayen
+COUNTRIES="$COUNTRIES SZ" # Swaziland
+COUNTRIES="$COUNTRIES SY" # Syrian Arab Republic
+COUNTRIES="$COUNTRIES TW" # Taiwan, Province of China
+COUNTRIES="$COUNTRIES TJ" # Tajikistan
+COUNTRIES="$COUNTRIES TZ" # Tanzania, United Republic of
+COUNTRIES="$COUNTRIES TH" # Thailand
+COUNTRIES="$COUNTRIES TL" # Timor-Leste
+COUNTRIES="$COUNTRIES TG" # Togo
+COUNTRIES="$COUNTRIES TK" # Tokelau
+COUNTRIES="$COUNTRIES TO" # Tonga
+COUNTRIES="$COUNTRIES TT" # Trinidad and Tobago
+COUNTRIES="$COUNTRIES TN" # Tunisia
+COUNTRIES="$COUNTRIES TR" # Turkey
+COUNTRIES="$COUNTRIES TM" # Turkmenistan
+COUNTRIES="$COUNTRIES TC" # Turks and Caicos Islands
+COUNTRIES="$COUNTRIES TV" # Tuvalu
+COUNTRIES="$COUNTRIES UG" # Uganda
+COUNTRIES="$COUNTRIES UA" # Ukraine
+COUNTRIES="$COUNTRIES AE" # United Arab Emirates
+COUNTRIES="$COUNTRIES UY" # Uruguay
+COUNTRIES="$COUNTRIES UZ" # Uzbekistan
+COUNTRIES="$COUNTRIES VU" # Vanuatu
+COUNTRIES="$COUNTRIES VE" # Venezuela, Bolivarian Republic of
+COUNTRIES="$COUNTRIES VN" # Viet Nam
+COUNTRIES="$COUNTRIES VG" # Virgin Islands, British
+COUNTRIES="$COUNTRIES VI" # Virgin Islands, U.S.
+COUNTRIES="$COUNTRIES WF" # Wallis and Futuna
+COUNTRIES="$COUNTRIES YE" # Yemen
+COUNTRIES="$COUNTRIES ZM" # Zambia
+COUNTRIES="$COUNTRIES ZW" # Zimbabwe
+
+# empty countries = no ranges there
+#COUNTRIES="$COUNTRIES CX" # Christmas Island # not existing
+#COUNTRIES="$COUNTRIES CC" # Cocos (Keeling) Islands #none existing
+# COUNTRIES="$COUNTRIES HM" # Heard Island and Mcdonald Islands # not existing
+# COUNTRIES="$COUNTRIES SH" # Saint Helena, Ascension and Tristan Da Cunha # not existing
+# COUNTRIES="$COUNTRIES EH" # Western Sahara # not existing
+
+
+AFRICA="DZ AO SH BJ BW BF BI CM CV CF TD KM CG DJ EG GQ ER ET GA GM GH GW GN CI KE LS LR LY MG MW ML MR MU YT MA MZ NA NE NG ST RE RW ST SN SC SL SO ZA SH SD SZ TZ TG TN UG CD ZM TZ ZW SS CD" 
+
+ANTARCTICA="AQ"
+
+ASIA="AF AM AZ BH BD BT BN KH CN CX CC IO GE HK IN ID IR IQ IL JP JO KZ KP KR KW KG LA LB MO MY MV MN MM NP OM PK PH QA SA SG LK SY TW TJ TH TR TM AE UZ VN YE PS" 
+
+OCEANIA="AS AU NZ CK FJ PF GU KI MP MH FM UM NR NC NZ NU NF PW PG MP SB TK TO TV VU UM WF WS TL" 
+
+EUROPE="AL AD AT BY BE BA BG HR CY CZ DK EE FO FI FR DE GI GR HU IS IE IT LV LI LT LU MK MT MD MC NL NO PL PT RO RU SM RS SK SI ES SE CH UA GB VA RS IM RS ME" 
+
+NORTH_AMERICA="AI AG AW BS BB BZ BM VG CA KY CR CU CW DM DO SV GL GD GP GT HT HN JM MQ MX PM MS CW KN NI PA PR KN LC PM VC TT TC VI US SX BQ SA SE" 
+
+SOUTH_AMERICA="AR BO BR CL CO EC FK GF GY GY PY PE SR UY VE" 
+
+CONTINENTS="AFRICA ANTARCTICA ASIA OCEANIA EUROPE NORTH_AMERICA SOUTH_AMERICA"
+
+
+# FETCH IP DATA FOR ALL COUNTRIES
+for COUNTRY in $COUNTRIES; do 
+	echo "fetching for country ${COUNTRY}"
+
+	DATA="ipVersion=4&countryCode%5B%5D="${COUNTRY}"&format=cidr&btnDownload=Download"
+	curl 'http://www.ip2location.com/free/visitor-blocker' -H 'Cookie: first_visit=1431630074; PHPSESSID=ne8s9bp7bmts9q57fm1nggitb6; first_visit=1431635389; _gat=1; _ga=GA1.2.1495958884.1431630152' -H 'Origin: http://www.ip2location.com' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,de;q=0.6' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.52 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://www.ip2location.com/free/visitor-blocker' -H 'Connection: keep-alive' -H 'DNT: 1' --data "$DATA" --compressed > /tmp/country_range_${COUNTRY}.txt
+		sleep 2;
+
+done;
+
+
+# CREATE IPSETS FOR ALL CONTINENTS
+for CONTINENT in ${CONTINENTS}; do
+	echo "creating continent list for ${CONTINENT}"
+	ipset create --exist continent_${CONTINENT} hash:net hashsize 16384
+done;
+
+# ADD countries to continent ip sets
+for CONTINENTX in ${CONTINENTS}; do
+	echo "handling continent ${CONTINENTX}"
+	A="\${${CONTINENTX}}"
+	eval "C=${A}"
+	echo "it has the countries: ${C}"
+	for COUNTRY in ${C}; do
+		echo "adding ranges of country ${COUNTRY}"
+		FILENAME="/tmp/country_range_${COUNTRY}.txt"
+		if [ -f $FILENAME ]; then
+			
+			if ! grep 'html' $FILENAME; then
+				RANGES=$(cat /tmp/country_range_${COUNTRY}.txt)
+			
+				for RANGE in ${RANGES}; do
+					ipset -A continent_${CONTINENTX} $RANGE -exist
+				done;
+			else
+				echo "skipping country ${COUNTRY} because of invalid data file"
+			fi; 
+		fi;
+	done;
+done;
+
+
+
+#LIST_NAME=blacklist_bad_countries
+
+# Create the named ipset set if it doesn't exist
+#ipset create --exist ${LIST_NAME} hash:net hashsize 524288
+#ipset create --exist ${LIST_NAME}_tmp hash:net hashsize 524288
+
+# Get list of IP ranges
+#
+# We use curl to fetch the list of AS from a site that has hosteuropes BGP info.
+# then we fetch all the members, and extract the ranges
+#
+#NUM=0
+#ipset flush ${LIST_NAME}_tmp
+#for COUNTRY in $COUNTRIES; do 
+#	echo "fetching for country ${COUNTRY}"
+#
+#DATA="ipVersion=4&countryCode%5B%5D="${COUNTRY}"&format=cidr&btnDownload=Download"
+#echo $DATA;
+#curl 'http://www.ip2location.com/free/visitor-blocker' -H 'Cookie: first_visit=1431630074; PHPSESSID=ne8s9bp7bmts9q57fm1nggitb6; first_visit=1431635389; _gat=1; _ga=GA1.2.1495958884.1431630152' -H 'Origin: http://www.ip2location.com' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,de;q=0.6' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.52 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://www.ip2location.com/free/visitor-blocker' -H 'Connection: keep-alive' -H 'DNT: 1' --data "$DATA" --compressed > /tmp/country_range_${COUNTRY}.txt
+#	sleep 2;
+
+#ipset create --exist COUNTRY_${COUNTRY} hash:net 
+#ipset flush COUNTRY_${COUNTRY}
+#RANGES=$(cat /tmp/country_range_${COUNTRY}.txt)
+#
+#	for line in $RANGES; do
+#NUM=$((NUM+1))
+#echo "adding ${NUM}"
+#		ipset -A COUNTRY_${COUNTRY} $line -exist
+#	done
+#done;
+
+
+# Loop through the ranges, adding each to the list
