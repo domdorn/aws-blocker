@@ -1,29 +1,32 @@
 #/bin/bash
 
-#COUNTRIES="$COUNTRIES DE" # Germany
-#COUNTRIES="$COUNTRIES FI" # Finland
-#COUNTRIES="$COUNTRIES FR" # France
-#COUNTRIES="$COUNTRIES CA" # Canada
-#COUNTRIES="$COUNTRIES DK" # Denmark
-#COUNTRIES="$COUNTRIES BE" # Belgium
-#COUNTRIES="$COUNTRIES AT" # Austria
-#COUNTRIES="$COUNTRIES GB" # United Kingdom
+
+
+COUNTRIES=""
+
+COUNTRIES="$COUNTRIES DE" # Germany
+COUNTRIES="$COUNTRIES FI" # Finland
+COUNTRIES="$COUNTRIES FR" # France
+COUNTRIES="$COUNTRIES CA" # Canada
+COUNTRIES="$COUNTRIES DK" # Denmark
+COUNTRIES="$COUNTRIES BE" # Belgium
+COUNTRIES="$COUNTRIES AT" # Austria
+COUNTRIES="$COUNTRIES GB" # United Kingdom
 #COUNTRIES="$COUNTRIES US" # United States
-#COUNTRIES="$COUNTRIES UM" # United States Minor Outlying Islands
-#COUNTRIES="$COUNTRIES IE" # Ireland
-#COUNTRIES="$COUNTRIES IT" # Italy
-#COUNTRIES="$COUNTRIES LI" # Liechtenstein
-#COUNTRIES="$COUNTRIES NL" # Netherlands
-#COUNTRIES="$COUNTRIES SI" # Slovenia
-#COUNTRIES="$COUNTRIES SE" # Sweden
-#COUNTRIES="$COUNTRIES CH" # Switzerland
+COUNTRIES="$COUNTRIES UM" # United States Minor Outlying Islands
+COUNTRIES="$COUNTRIES IE" # Ireland
+COUNTRIES="$COUNTRIES IT" # Italy
+COUNTRIES="$COUNTRIES LI" # Liechtenstein
+COUNTRIES="$COUNTRIES NL" # Netherlands
+COUNTRIES="$COUNTRIES SI" # Slovenia
+COUNTRIES="$COUNTRIES SE" # Sweden
+COUNTRIES="$COUNTRIES CH" # Switzerland
 
 
 
 
 
 #<select name="countryCode[]" class="text" style="width:400px;height:200px;" multiple="">
-COUNTRIES=""
 COUNTRIES="$COUNTRIES A"  # Afghanistan
 COUNTRIES="$COUNTRIES AX" # Aland Islands
 COUNTRIES="$COUNTRIES AL" # Albania
@@ -280,43 +283,103 @@ CONTINENTS="AFRICA ANTARCTICA ASIA OCEANIA EUROPE NORTH_AMERICA SOUTH_AMERICA"
 # FETCH IP DATA FOR ALL COUNTRIES
 for COUNTRY in $COUNTRIES; do 
 	echo "fetching for country ${COUNTRY}"
-
-	DATA="ipVersion=4&countryCode%5B%5D="${COUNTRY}"&format=cidr&btnDownload=Download"
-	curl 'http://www.ip2location.com/free/visitor-blocker' -H 'Cookie: first_visit=1431630074; PHPSESSID=ne8s9bp7bmts9q57fm1nggitb6; first_visit=1431635389; _gat=1; _ga=GA1.2.1495958884.1431630152' -H 'Origin: http://www.ip2location.com' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,de;q=0.6' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.52 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://www.ip2location.com/free/visitor-blocker' -H 'Connection: keep-alive' -H 'DNT: 1' --data "$DATA" --compressed > /tmp/country_range_${COUNTRY}.txt
+	FILENAME="/tmp/country_range_${COUNTRY}.txt"
+	if [ ! -f $FILENAME ]; then
+		echo "fetching for country ${COUNTRY}";	
+		DATA="ipVersion=4&countryCode%5B%5D="${COUNTRY}"&format=cidr&btnDownload=Download"
+		curl 'http://www.ip2location.com/free/visitor-blocker' -H 'Cookie: first_visit=1431630074; PHPSESSID=ne8s9bp7bmts9q57fm1nggitb6; first_visit=1431635389; _gat=1; _ga=GA1.2.1495958884.1431630152' -H 'Origin: http://www.ip2location.com' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,de;q=0.6' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.52 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Cache-Control: max-age=0' -H 'Referer: http://www.ip2location.com/free/visitor-blocker' -H 'Connection: keep-alive' -H 'DNT: 1' --data "$DATA" --compressed > $FILENAME
 		sleep 2;
-
+	else
+		echo "DATA for country ${COUNTRY} already exists, skipping";
+	fi;
 done;
 
 
 # CREATE IPSETS FOR ALL CONTINENTS
 for CONTINENT in ${CONTINENTS}; do
 	echo "creating continent list for ${CONTINENT}"
-	ipset create --exist continent_${CONTINENT} hash:net hashsize 16384
+	ipset create --exist continent_${CONTINENT} list:set size 32
 done;
 
-# ADD countries to continent ip sets
+# CREATE A SET FOR EVERY COUNTRY
+
+for COUNTRY in ${COUNTRIES}; do
+	echo "adding ranges of country ${COUNTRY}"
+	FILENAME="/tmp/country_range_${COUNTRY}.txt"
+	if [ -f $FILENAME ]; then
+		
+		if ! grep 'html' $FILENAME; then
+			ITEMSIZE=$(cat $FILENAME | wc -l)
+			echo "${ITEMSIZE} items"
+			ipset create --exist country_${COUNTRY} hash:net hashsize ${ITEMSIZE}
+			RANGES=$(cat $FILENAME)
+			NUM=0		
+			ipset flush country_${COUNTRY}
+			for RANGE in ${RANGES}; do
+				NUM=$((NUM+1))
+				ipset -A country_${COUNTRY} $RANGE -exist || echo "failed to add item ${NUM} to country hash of ${COUNTRY}"
+			done;
+		else
+			echo "skipping country ${COUNTRY} because of invalid data file"
+		fi; 
+	fi;
+done;
+
+
+
+# ADD countries to continent ip lists
 for CONTINENTX in ${CONTINENTS}; do
 	echo "handling continent ${CONTINENTX}"
 	A="\${${CONTINENTX}}"
 	eval "C=${A}"
 	echo "it has the countries: ${C}"
 	for COUNTRY in ${C}; do
-		echo "adding ranges of country ${COUNTRY}"
-		FILENAME="/tmp/country_range_${COUNTRY}.txt"
-		if [ -f $FILENAME ]; then
-			
-			if ! grep 'html' $FILENAME; then
-				RANGES=$(cat /tmp/country_range_${COUNTRY}.txt)
-			
-				for RANGE in ${RANGES}; do
-					ipset -A continent_${CONTINENTX} $RANGE -exist
-				done;
-			else
-				echo "skipping country ${COUNTRY} because of invalid data file"
-			fi; 
-		fi;
+		ipset add continent_${CONTINENTX} country_${COUNTRY}
 	done;
 done;
+
+#		echo "adding ranges of country ${COUNTRY}"
+#		FILENAME="/tmp/country_range_${COUNTRY}.txt"
+#		if [ -f $FILENAME ]; then
+#			
+#			if ! grep 'html' $FILENAME; then
+#				RANGES=$(cat /tmp/country_range_${COUNTRY}.txt)
+#			
+#				for RANGE in ${RANGES}; do
+#					ipset -A continent_${CONTINENTX} $RANGE -exist
+#				done;
+#			else
+#				echo "skipping country ${COUNTRY} because of invalid data file"
+#			fi; 
+#		fi;
+#	done;
+#done;
+
+
+
+# ADD countries to continent ip sets
+#for CONTINENTX in ${CONTINENTS}; do
+#	echo "handling continent ${CONTINENTX}"
+#	A="\${${CONTINENTX}}"
+#	eval "C=${A}"
+#	echo "it has the countries: ${C}"
+#	for COUNTRY in ${C}; do
+#		echo "adding ranges of country ${COUNTRY}"
+#		FILENAME="/tmp/country_range_${COUNTRY}.txt"
+#		if [ -f $FILENAME ]; then
+#			
+#			if ! grep 'html' $FILENAME; then
+#				RANGES=$(cat /tmp/country_range_${COUNTRY}.txt)
+#			
+#				for RANGE in ${RANGES}; do
+#					ipset -A continent_${CONTINENTX} $RANGE -exist
+#				done;
+#			else
+#				echo "skipping country ${COUNTRY} because of invalid data file"
+#			fi; 
+#		fi;
+#	done;
+#done;
 
 
 
