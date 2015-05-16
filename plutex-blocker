@@ -1,0 +1,48 @@
+#/bin/bash
+
+# Create the AWS iptables chain if it doesn't exist
+#iptables -n --list AWS >/dev/null 2>&1 \
+#    || (iptables -N AWS && iptables -I INPUT 1 -j AWS)
+
+LIST_NAME=blacklist_plutex
+
+ipset create --exist ${LIST_NAME} hash:net hashsize 1024
+
+# Get list of IP ranges
+#
+# First we use curl to grab the official list of ranges from Amazon. The -s
+# prevents extraneous output from curl, and the -L makes it follow redirects.
+#
+# The ranges are passed to jq, a JSON parser. The -r makes jq output raw data
+# without quotes. We only need the list of prefixes, so we discard everything
+# else.
+RANGES="91.202.43.0/24
+91.202.42.0/24
+91.202.41.0/24
+91.202.40.0/24
+31.24.151.0/24
+31.24.150.0/24
+31.24.149.0/24
+31.24.148.0/24
+31.24.147.0/24
+31.24.146.0/24
+31.24.145.0/24
+31.24.144.0/24
+109.69.71.0/24
+109.69.70.0/24
+109.69.69.0/24
+109.69.68.0/24
+109.69.67.0/24
+109.69.66.0/24
+109.69.65.0/24
+109.69.64.0/24
+"
+
+ipset flush ${LIST_NAME}
+
+# Loop through the ranges, adding each to the list
+for line in $RANGES; do
+	ipset -A ${LIST_NAME} $line -exist
+done
+
+ 
